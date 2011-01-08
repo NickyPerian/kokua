@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <sounds>
 	<sound
+		name="UISndNone"
+		description="no sound"
+		sound_id="00000000-0000-0000-0000-000000000000" />
+	<sound
 		name="UISndAlert"
 		description="Sound file for alerts (uuid for sound asset)"
 		sound_id="ed124764-705d-d497-167a-182cd9fa2e6c" />
@@ -83,5 +87,5 @@
 	<sound
 		name="DefaultMagentaSound"
 		description="Who says synesthesia isn't in anymore?"
-		sound_id="00000000-0000-0000-0000-000000000000" />
+		reference="UISndNone" />
 </sounds>

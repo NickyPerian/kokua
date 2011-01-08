@@ -99,7 +99,9 @@ LLButton::Params::Params()
 	scale_image("scale_image", true),
 	hover_glow_amount("hover_glow_amount"),
 	commit_on_return("commit_on_return", true),
-	use_draw_context_alpha("use_draw_context_alpha", true)
+	use_draw_context_alpha("use_draw_context_alpha", true),
+	sound_click("sound_click"),
+	sound_click_release("sound_click_release")
 {
 	addSynonym(is_toggle, "toggle");
 	held_down_delay.seconds = 0.5f;
@@ -160,7 +162,9 @@ LLButton::LLButton(const LLButton::Params& p)
 	mMouseDownSignal(NULL),
 	mMouseUpSignal(NULL),
 	mHeldDownSignal(NULL),
-	mUseDrawContextAlpha(p.use_draw_context_alpha)
+	mUseDrawContextAlpha(p.use_draw_context_alpha),
+	mSoundClick(p.sound_click),
+	mSoundClickRelease(p.sound_click_release)
 
 {
 	static LLUICachedControl<S32> llbutton_orig_h_pad ("UIButtonOrigHPad", 0);
@@ -267,12 +271,13 @@ void LLButton::onCommit()
 
 	if (getSoundFlags() & MOUSE_DOWN)
 	{
-		make_ui_sound("UISndClick");
+		mSoundClick.empty() ? make_ui_sound("UISndClick") : make_ui_sound(mSoundClick);
+
 	}
 
 	if (getSoundFlags() & MOUSE_UP)
 	{
-		make_ui_sound("UISndClickRelease");
+		mSoundClickRelease.empty() ? make_ui_sound("UISndClickRelease") : make_ui_sound(mSoundClickRelease);
 	}
 
 	if (mIsToggle)
@@ -393,7 +398,7 @@ BOOL LLButton::handleMouseDown(S32 x, S32 y, MASK mask)
 		
 		if (getSoundFlags() & MOUSE_DOWN)
 		{
-			make_ui_sound("UISndClick");
+			mSoundClick.empty() ? make_ui_sound("UISndClick") : make_ui_sound(mSoundClick);
 		}
 	}
 	return TRUE;
@@ -426,7 +431,8 @@ BOOL LLButton::handleMouseUp(S32 x, S32 y, MASK mask)
 		{
 			if (getSoundFlags() & MOUSE_UP)
 			{
-				make_ui_sound("UISndClickRelease");
+				mSoundClickRelease.empty() ? 	make_ui_sound("UISndClickRelease") 
+							: make_ui_sound(mSoundClickRelease);
 			}
 
 			if (mIsToggle)

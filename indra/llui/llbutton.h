@@ -126,6 +126,9 @@ public:
 
 		Optional<bool>			use_draw_context_alpha;
 
+		Optional <std::string>	sound_click,
+					sound_click_release;
+
 		Params();
 	};
 	
@@ -356,6 +359,8 @@ private:
 	bool						mForcePressedState;
 
 	LLFrameTimer				mFlashingTimer;
+	std::string mSoundClick;
+	std::string mSoundClickRelease;
 };
 
 // Build time optimization, generate once in .cpp file

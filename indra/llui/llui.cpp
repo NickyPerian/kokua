@@ -98,10 +98,8 @@ static LLDefaultChildRegistry::Register<LLLoadingIndicator> register_loading_ind
 //
 // Functions
 //
-void make_ui_sound(const char* namep)
+void make_ui_sound(const std::string& name)
 {
-	std::string name = ll_safe_string(namep);
-
 	if (LLUI::sAudioCallback)
 	{
 		LLUUID sound = KOKUAUISoundTable::instance().getSoundID(name);

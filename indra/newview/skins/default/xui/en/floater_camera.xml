@@ -123,6 +123,8 @@ free_mode_title
          quadrant="left"
          scale_image="false"
          sound_flags="3"
+         sound_click="UISndNone"
+         sound_click_release="UISndNone"
          visible="true"
          tool_tip="Orbit camera around focus"
          top="1"
@@ -181,6 +183,8 @@ free_mode_title
      quadrant="left"
      scale_image="false"
      sound_flags="3"
+     sound_click="UISndNone"
+     sound_click_release="UISndNone"
      tool_tip="Move camera up and down, left and right"
      top="2"
      width="58"/>
