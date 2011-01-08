@@ -42,6 +42,7 @@
 #include <boost/spirit/include/classic_core.hpp>
 
 #include "lluicolor.h"
+#include "kokuauisound.h"
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
@@ -70,6 +71,7 @@ LLXSDWriter::LLXSDWriter()
 	registerInspectFunc<F64>(boost::bind(&LLXSDWriter::writeAttribute, this, "xs:double", _1, _2, _3, _4));
 	registerInspectFunc<LLColor4>(boost::bind(&LLXSDWriter::writeAttribute, this, "xs:string", _1, _2, _3, _4));
 	registerInspectFunc<LLUIColor>(boost::bind(&LLXSDWriter::writeAttribute, this, "xs:string", _1, _2, _3, _4));
+	registerInspectFunc<KOKUAUISound>(boost::bind(&LLXSDWriter::writeAttribute, this, "xs:string", _1, _2, _3, _4));
 	registerInspectFunc<LLUUID>(boost::bind(&LLXSDWriter::writeAttribute, this, "xs:string", _1, _2, _3, _4));
 	registerInspectFunc<LLSD>(boost::bind(&LLXSDWriter::writeAttribute, this, "xs:string", _1, _2, _3, _4));
 }
@@ -400,6 +402,7 @@ LLXUIParser::LLXUIParser()
 		registerParserFuncs<F64>(readF64Value, writeF64Value);
 		registerParserFuncs<LLColor4>(readColor4Value, writeColor4Value);
 		registerParserFuncs<LLUIColor>(readUIColorValue, writeUIColorValue);
+		registerParserFuncs<KOKUAUISound>(readUISoundValue, writeUISoundValue);
 		registerParserFuncs<LLUUID>(readUUIDValue, writeUUIDValue);
 		registerParserFuncs<LLSD>(readSDValue, writeSDValue);
 	}
@@ -912,6 +915,35 @@ bool LLXUIParser::writeUIColorValue(Parser& parser, const void* val_ptr, const n
 	return false;
 }
 
+bool LLXUIParser::readUISoundValue(Parser& parser, void* val_ptr)
+{
+	LLXUIParser& self = static_cast<LLXUIParser&>(parser);
+	LLUUID sound;
+	bool success =  sound.set(self.mCurReadNode->getSanitizedValue());
+	if (success)
+	{
+		*(LLUUID*)(val_ptr) = sound;
+		return true;
+	}
+	return false;
+}
+
+bool LLXUIParser::writeUISoundValue(Parser& parser, const void* val_ptr, const name_stack_t& stack)
+{
+	LLXUIParser& self = static_cast<LLXUIParser&>(parser);
+	LLXMLNodePtr node = self.getNode(stack);
+	if (node.notNull())
+	{
+		KOKUAUISound sound = *((KOKUAUISound*)val_ptr);
+		//RN: don't write out the color that is represented by a function
+		// rely on param block exporting to get the reference to the color settings
+		if (sound.isReference()) return false;
+		node->setStringValue(((LLUUID*)val_ptr)->asString());
+		return true;
+	}
+	return false;
+}
+
 bool LLXUIParser::readUUIDValue(Parser& parser, void* val_ptr)
 {
 	LLXUIParser& self = static_cast<LLXUIParser&>(parser);
@@ -1069,6 +1101,7 @@ LLSimpleXUIParser::LLSimpleXUIParser(LLSimpleXUIParser::element_start_callback_t
 		registerParserFuncs<F64>(readF64Value);
 		registerParserFuncs<LLColor4>(readColor4Value);
 		registerParserFuncs<LLUIColor>(readUIColorValue);
+		registerParserFuncs<KOKUAUISound>(readUISoundValue);
 		registerParserFuncs<LLUUID>(readUUIDValue);
 		registerParserFuncs<LLSD>(readSDValue);
 	}
@@ -1422,6 +1455,19 @@ bool LLSimpleXUIParser::readUIColorValue(Parser& parser, void* val_ptr)
 	if (parse(self.mCurAttributeValueBegin, real_p[assign_a(value.mV[0])] >> real_p[assign_a(value.mV[1])] >> real_p[assign_a(value.mV[2])] >> real_p[assign_a(value.mV[3])], space_p).full)
 	{
 		colorp->set(value);
+		return true;
+	}
+	return false;
+}
+
+bool LLSimpleXUIParser::readUISoundValue(Parser& parser, void* val_ptr)
+{
+	LLSimpleXUIParser& self = static_cast<LLSimpleXUIParser&>(parser);
+	LLUUID sound;
+
+	if (sound.set(std::string(self.mCurAttributeValueBegin)))
+	{
+		*(LLUUID*)(val_ptr) = sound;
 		return true;
 	}
 	return false;

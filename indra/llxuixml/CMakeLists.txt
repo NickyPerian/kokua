@@ -14,6 +14,7 @@ include_directories(
     )
 
 set(llxuixml_SOURCE_FILES
+    kokuauisound.cpp
     llinitparam.cpp
     lltrans.cpp
     lluicolor.cpp
@@ -23,6 +24,7 @@ set(llxuixml_SOURCE_FILES
 set(llxuixml_HEADER_FILES
     CMakeLists.txt
 
+    kokuauisound.h
     llinitparam.h
     lltrans.h
     llregistry.h

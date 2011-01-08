@@ -30,6 +30,7 @@
 #include "lltoolplacer.h"
 
 // viewer headers
+#include "kokuauisoundtable.h"
 #include "llbutton.h"
 #include "llviewercontrol.h"
 //#include "llfirstuse.h"
@@ -223,7 +224,7 @@ BOOL LLToolPlacer::addObject( LLPCode pcode, S32 x, S32 y, U8 use_physics )
 	// Play creation sound
 	if (gAudiop)
 	{
-		gAudiop->triggerSound( LLUUID(gSavedSettings.getString("UISndObjectCreate")),
+		gAudiop->triggerSound( KOKUAUISoundTable::instance().getSoundID("UISndObjectCreate"),
 							   gAgent.getID(), 1.0f, LLAudioEngine::AUDIO_TYPE_UI);
 	}
 

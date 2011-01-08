@@ -41,6 +41,7 @@
 #include "llgl.h"
 
 // Project includes
+#include "kokuauisoundtable.h"
 #include "llcontrol.h"
 #include "llui.h"
 #include "lluicolortable.h"
@@ -100,36 +101,25 @@ static LLDefaultChildRegistry::Register<LLLoadingIndicator> register_loading_ind
 void make_ui_sound(const char* namep)
 {
 	std::string name = ll_safe_string(namep);
-	if (!LLUI::sSettingGroups["config"]->controlExists(name))
+
+	if (LLUI::sAudioCallback)
 	{
-		llwarns << "tried to make ui sound for unknown sound name: " << name << llendl;	
-	}
-	else
-	{
-		LLUUID uuid(LLUI::sSettingGroups["config"]->getString(name));
-		if (uuid.isNull())
+		LLUUID sound = KOKUAUISoundTable::instance().getSoundID(name);
+		if (LLUI::sSettingGroups["config"]->getBOOL("UISndDebugSpamToggle"))
 		{
-			if (LLUI::sSettingGroups["config"]->getString(name) == LLUUID::null.asString())
+			if (sound.isNull())
 			{
-				if (LLUI::sSettingGroups["config"]->getBOOL("UISndDebugSpamToggle"))
-				{
-					llinfos << "ui sound name: " << name << " triggered but silent (null uuid)" << llendl;	
-				}				
+				llwarns << "ui sound spam name: " << name << " triggered but silent (null uuid)" << llendl;	
 			}
 			else
-			{
-				llwarns << "ui sound named: " << name << " does not translate to a valid uuid" << llendl;	
-			}
+				llwarns << "ui sound spam name: " << name << llendl;	
+		}
 
-		}
-		else if (LLUI::sAudioCallback != NULL)
-		{
-			if (LLUI::sSettingGroups["config"]->getBOOL("UISndDebugSpamToggle"))
-			{
-				llinfos << "ui sound name: " << name << llendl;	
-			}
-			LLUI::sAudioCallback(uuid);
-		}
+
+		if(!sound.isNull())
+			LLUI::sAudioCallback(sound);
+
+		LL_DEBUGS("UISound") << "Name:"  << name << " ID: " << sound.asString() << LL_ENDL;
 	}
 }
 

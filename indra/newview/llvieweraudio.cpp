@@ -27,6 +27,7 @@
 #include "llviewerprecompiledheaders.h"
 
 #include "kokuastreamingaudio.h"
+#include "kokuauisoundtable.h"
 #include "llaudioengine.h"
 #include "llagent.h"
 #include "llagentcamera.h"
@@ -61,39 +62,44 @@ void init_audio()
 	
 		if (!mute_audio && FALSE == gSavedSettings.getBOOL("NoPreload"))
 		{
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndAlert")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndBadKeystroke")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndChatFromObject")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndClick")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndClickRelease")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndHealthReductionF")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndHealthReductionM")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndIncomingChat")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndIncomingIM")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndInvApplyToObject")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndInvalidOp")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndInventoryCopyToInv")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndMoneyChangeDown")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndMoneyChangeUp")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndObjectCopyToInv")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndObjectCreate")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndObjectDelete")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndObjectRezIn")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndObjectRezOut")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndSnapshot")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndStartAutopilot")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndStartFollowpilot")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndStartIM")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndStopAutopilot")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndTeleportOut")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndTextureApplyToObject")));
-			//gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndTextureCopyToInv")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndTyping")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndWindowClose")));
-			gAudiop->preloadSound(LLUUID(gSavedSettings.getString("UISndWindowOpen")));
+			preload_ui_sounds();
 		}
 	}
 	audio_update_volume(true);
+}
+
+void preload_ui_sounds()
+{
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndAlert"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndBadKeystroke"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndChatFromObject"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndClick"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndClickRelease"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndHealthReductionF"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndHealthReductionM"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndIncomingChat"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndIncomingIM"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndInvApplyToObject"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndInvalidOp"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndInventoryCopyToInv"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndMoneyChangeDown"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndMoneyChangeUp"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndObjectCopyToInv"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndObjectCreate"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndObjectDelete"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndObjectRezIn"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndObjectRezOut"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndSnapshot"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndStartAutopilot"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndStartFollowpilot"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndStartIM"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndStopAutopilot"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndTeleportOut"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndTextureApplyToObject"));
+	//gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndTextureCopyToInv"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndTyping"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndWindowClose"));
+	gAudiop->preloadSound(KOKUAUISoundTable::instance().getSoundID("UISndWindowOpen"));
 }
 
 void audio_update_volume(bool force_update)

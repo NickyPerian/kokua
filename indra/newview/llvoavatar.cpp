@@ -41,6 +41,7 @@
 #include "llcachename.h"
 #include "noise.h"
 #include "sound_ids.h"
+#include "kokuauisoundtable.h"
 
 #include "llagent.h" //  Get state values from here
 #include "llagentcamera.h"
@@ -4619,11 +4620,11 @@ BOOL LLVOAvatar::processSingleAnimationStateChange( const LLUUID& anim_id, BOOL 
 					// to support both spatialized and non-spatialized instances of the same sound
 					//if (isSelf())
 					//{
-					//	gAudiop->triggerSound(LLUUID(gSavedSettings.getString("UISndTyping")), 1.0f, LLAudioEngine::AUDIO_TYPE_UI);
+					//	gAudiop->triggerSound(KOKUAUISoundTable::instance().getSoundID("UISndTyping")), 1.0f, LLAudioEngine::AUDIO_TYPE_UI);
 					//}
 					//else
 					{
-						LLUUID sound_id = LLUUID(gSavedSettings.getString("UISndTyping"));
+						LLUUID sound_id = KOKUAUISoundTable::instance().getSoundID("UISndTyping");
 						gAudiop->triggerSound(sound_id, getID(), 1.0f, LLAudioEngine::AUDIO_TYPE_SFX, char_pos_global);
 					}
 				}

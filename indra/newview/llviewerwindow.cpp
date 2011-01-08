@@ -38,6 +38,7 @@
 #include <fstream>
 #include <algorithm>
 
+#include "kokuauisoundtable.h"
 #include "llagent.h"
 #include "llagentcamera.h"
 #include "llfloaterreg.h"
@@ -3876,7 +3877,7 @@ void LLViewerWindow::playSnapshotAnimAndSound()
 		return;
 	}
 	gAgent.sendAnimationRequest(ANIM_AGENT_SNAPSHOT, ANIM_REQUEST_START);
-	send_sound_trigger(LLUUID(gSavedSettings.getString("UISndSnapshot")), 1.0f);
+	send_sound_trigger(KOKUAUISoundTable::instance().getSoundID("UISndSnapshot"), 1.0f);
 }
 
 BOOL LLViewerWindow::thumbnailSnapshot(LLImageRaw *raw, S32 preview_width, S32 preview_height, BOOL show_ui, BOOL do_rebuild, ESnapshotType type)

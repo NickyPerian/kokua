@@ -49,7 +49,9 @@
 						<!-- <string>GridManager</string> -->
 
 						<!-- <string>InventoryFetch</string> -->
-
+						
+						<string>UISound</string>
+						
 						<!-- Voice -->
 							<!-- <string>Voice</string> -->
 							<!-- <string>VivoxProtocolParser</string> -->

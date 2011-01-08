@@ -128,6 +128,7 @@ private:
 	static bool readF64Value(Parser& parser, void* val_ptr);
 	static bool readColor4Value(Parser& parser, void* val_ptr);
 	static bool readUIColorValue(Parser& parser, void* val_ptr);
+	static bool readUISoundValue(Parser& parser, void* val_ptr);
 	static bool readUUIDValue(Parser& parser, void* val_ptr);
 	static bool readSDValue(Parser& parser, void* val_ptr);
 
@@ -144,6 +145,7 @@ private:
 	static bool writeF64Value(Parser& parser, const void* val_ptr, const name_stack_t&);
 	static bool writeColor4Value(Parser& parser, const void* val_ptr, const name_stack_t&);
 	static bool writeUIColorValue(Parser& parser, const void* val_ptr, const name_stack_t&);
+	static bool writeUISoundValue(Parser& parser, const void* val_ptr, const name_stack_t&);
 	static bool writeUUIDValue(Parser& parser, const void* val_ptr, const name_stack_t&);
 	static bool writeSDValue(Parser& parser, const void* val_ptr, const name_stack_t&);
 
@@ -206,6 +208,7 @@ private:
 	static bool readF64Value(Parser&, void* val_ptr);
 	static bool readColor4Value(Parser&, void* val_ptr);
 	static bool readUIColorValue(Parser&, void* val_ptr);
+	static bool readUISoundValue(Parser&, void* val_ptr);
 	static bool readUUIDValue(Parser&, void* val_ptr);
 	static bool readSDValue(Parser&, void* val_ptr);
 

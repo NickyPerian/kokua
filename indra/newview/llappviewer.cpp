@@ -85,6 +85,7 @@
 #include "llupdaterservice.h"
 
 // Linden library includes
+#include "kokuauisoundtable.h"
 #include "llavatarnamecache.h"
 #include "llimagej2c.h"
 #include "llmemory.h"
@@ -1560,6 +1561,8 @@ bool LLAppViewer::cleanup()
 	
 	LLUIColorTable::instance().saveUserSettings();
 
+	KOKUAUISoundTable::instance().saveUserSettings();
+
 	// PerAccountSettingsFile should be empty if no user has been logged on.
 	// *FIX:Mani This should get really saved in a "logoff" mode. 
 	if (gSavedSettings.getString("PerAccountSettingsFile").empty())
@@ -1698,6 +1701,7 @@ bool LLAppViewer::cleanup()
 	
 	gSavedSettings.cleanup();
 	LLUIColorTable::instance().clear();
+	KOKUAUISoundTable::instance().clear();
 	gCrashSettings.cleanup();
 
 	LLWatchdog::getInstance()->cleanup();
@@ -1930,6 +1934,7 @@ std::string LLAppViewer::getSettingsFilename(const std::string& location_key,
 void LLAppViewer::loadColorSettings()
 {
 	LLUIColorTable::instance().loadFromSettings();
+	KOKUAUISoundTable::instance().loadFromSettings();
 }
 
 bool LLAppViewer::initConfiguration()
